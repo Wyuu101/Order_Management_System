@@ -1,48 +1,48 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include"function.h"
-//------------È«¾Ö±äÁ¿ÉùÃ÷-------
-LNode* tempNode[200];//½«±»É¾³ı½ÚµãµÄ»º´æÊı×é
-List L;              //È«¾ÖÊı¾İ±í
-HWND  hChildWnd;     //Ö÷´°ÌåµÄ×Ó´°Ìå(¹ö¶¯´°ÌåµÄ¾ä±ú)
+//------------å…¨å±€å˜é‡å£°æ˜-------
+LNode* tempNode[200];//å°†è¢«åˆ é™¤èŠ‚ç‚¹çš„ç¼“å­˜æ•°ç»„
+List L;              //å…¨å±€æ•°æ®è¡¨
+HWND  hChildWnd;     //ä¸»çª—ä½“çš„å­çª—ä½“(æ»šåŠ¨çª—ä½“çš„å¥æŸ„)
    
-//------------------------------------------------------º¯ÊıÔ¤ÉùÃ÷-------------------------------------------------------
+//------------------------------------------------------å‡½æ•°é¢„å£°æ˜-------------------------------------------------------
 
-void DrawRect(HDC hdc, int left, int top, int right, int bottom);                               //»æÖÆ¾ØĞÎ
-void draw(HWND hwnd);                                                                           //»æÖÆÖ÷´°Ìå
-void AppendTextToEdit(const char* text);                                                        //ÔÚ¹ö¶¯´°Ìå×·¼ÓÎÄ±¾
-void AppendTextToEdit_Clear(const char* text);                                                  //Çå¿Õ¹ö¶¯´°ÌåÎÄ±¾
-void LoadData_Win(HWND hwnd, List& L);                                                          //¼ÓÔØÎÄ¼şÊı¾İ                           
-void OutputData_Win(HWND hwnd, List& L);                                                        //Êä³öÎÄ¼şÊı¾İ
-void OverwriteData_Win(HWND hwnd, List& L);                                                     //¸²Ğ´ÎÄ¼şÊı¾İ
-int Statistic_Win(HWND hwnd, List L);                                                           //Í³¼ÆÎÄ¼şÊı¾İ
-void Traverse_Win(HWND hwnd, List& L);                                                          //±éÀúÊı¾İ£¬²¢ÔÚ¹ö¶¯´°¿ÚÏÔÊ¾
-void  Find_ordetNumber_Win(HWND hwnd, List L);                                                  //¸ù¾İ¶©µ¥ºÅ²éÕÒÊı¾İ
-void Find_customerName_Win(HWND hwnd, List L);                                                  //¸ù¾İ¹Ë¿ÍĞÕÃû²éÕÒÊı¾İ
-void Find_productName_Win(HWND hwnd, List L);                                                   //¸ù¾İÉÌÆ·Ãû²éÕÒÊı¾İ
-void IncertData_Win(HWND hwnd, List& L);                                                        //²åÈëÊı¾İ
-void DelData_Win(HWND hwnd, List &L);                                                           //É¾³ıÊı¾İ
-void Clear_tempNode();                                                                          //Çå¿ÕÖ¸Õë»º´æÊı×é
-LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);                //´°Ìå´¦Àíº¯Êı
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);//Ö÷º¯Êı
+void DrawRect(HDC hdc, int left, int top, int right, int bottom);                               //ç»˜åˆ¶çŸ©å½¢
+void draw(HWND hwnd);                                                                           //ç»˜åˆ¶ä¸»çª—ä½“
+void AppendTextToEdit(const char* text);                                                        //åœ¨æ»šåŠ¨çª—ä½“è¿½åŠ æ–‡æœ¬
+void AppendTextToEdit_Clear(const char* text);                                                  //æ¸…ç©ºæ»šåŠ¨çª—ä½“æ–‡æœ¬
+void LoadData_Win(HWND hwnd, List& L);                                                          //åŠ è½½æ–‡ä»¶æ•°æ®                           
+void OutputData_Win(HWND hwnd, List& L);                                                        //è¾“å‡ºæ–‡ä»¶æ•°æ®
+void OverwriteData_Win(HWND hwnd, List& L);                                                     //è¦†å†™æ–‡ä»¶æ•°æ®
+int Statistic_Win(HWND hwnd, List L);                                                           //ç»Ÿè®¡æ–‡ä»¶æ•°æ®
+void Traverse_Win(HWND hwnd, List& L);                                                          //éå†æ•°æ®ï¼Œå¹¶åœ¨æ»šåŠ¨çª—å£æ˜¾ç¤º
+void  Find_ordetNumber_Win(HWND hwnd, List L);                                                  //æ ¹æ®è®¢å•å·æŸ¥æ‰¾æ•°æ®
+void Find_customerName_Win(HWND hwnd, List L);                                                  //æ ¹æ®é¡¾å®¢å§“åæŸ¥æ‰¾æ•°æ®
+void Find_productName_Win(HWND hwnd, List L);                                                   //æ ¹æ®å•†å“åæŸ¥æ‰¾æ•°æ®
+void IncertData_Win(HWND hwnd, List& L);                                                        //æ’å…¥æ•°æ®
+void DelData_Win(HWND hwnd, List &L);                                                           //åˆ é™¤æ•°æ®
+void Clear_tempNode();                                                                          //æ¸…ç©ºæŒ‡é’ˆç¼“å­˜æ•°ç»„
+LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);                //çª—ä½“å¤„ç†å‡½æ•°
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);//ä¸»å‡½æ•°
 
 //------------------------------------------------------------------------------------------------------------------------
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
 	switch (Message) {
 	case WM_ERASEBKGND:
 	{
-		HBRUSH hBrush = CreateSolidBrush(RGB(255, 200, 180));  // ´´½¨ºìÉ«»­Ë¢
+		HBRUSH hBrush = CreateSolidBrush(RGB(255, 200, 180));  // åˆ›å»ºçº¢è‰²ç”»åˆ·
 		HDC hdc = (HDC)wParam;
 		RECT rect;
 		GetClientRect(hwnd, &rect);
-		FillRect(hdc, &rect, hBrush);  // Ìî³ä´°Ìå¾ØĞÎÇøÓòÎªºìÉ«
-		DeleteObject(hBrush);  // ÊÍ·Å»­Ë¢×ÊÔ´
+		FillRect(hdc, &rect, hBrush);  // å¡«å……çª—ä½“çŸ©å½¢åŒºåŸŸä¸ºçº¢è‰²
+		DeleteObject(hBrush);  // é‡Šæ”¾ç”»åˆ·èµ„æº
 		return TRUE;
-		//--------------------Ìî³äÖ÷´°¿Ú±³¾°É«---------------------
+		//--------------------å¡«å……ä¸»çª—å£èƒŒæ™¯è‰²---------------------
 	}
 	case WM_PAINT:
 		draw(hwnd);
 		break;
-		//---------------------»æÖÆÖ÷´°ÌåÏßÌõ---------------------
+		//---------------------ç»˜åˆ¶ä¸»çª—ä½“çº¿æ¡---------------------
 	case WM_COMMAND:
 		if (LOWORD(wParam) == ID_BUTTON5) {
 			LoadData_Win(hwnd, L);
@@ -50,7 +50,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 		if (LOWORD(wParam) == ID_BUTTON1) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨Êä³ö£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•è¾“å‡ºï¼");
 			}
 			else
 				OutputData_Win(hwnd, L);
@@ -58,7 +58,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 		if (LOWORD(wParam) == ID_BUTTON7) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨¸²Ğ´£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•è¦†å†™ï¼");
 			}
 			else
 				OverwriteData_Win(hwnd, L);
@@ -72,67 +72,67 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 		if (LOWORD(wParam) == ID_BUTTON6) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨ÅÅĞò£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•æ’åºï¼");
 			}
 			else
 			{
 				Downrank_orderNumber(L);
-				AppendTextToEdit("\r\n[system]°´¶©µ¥½µĞòÅÅÁĞÍê±Ï£¡");
+				AppendTextToEdit("\r\n[system]æŒ‰è®¢å•é™åºæ’åˆ—å®Œæ¯•ï¼");
 			}
 		}
 		if (LOWORD(wParam) == ID_BUTTON4) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨ÅÅĞò£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•æ’åºï¼");
 			}
 			else
 			{
 				Uprank_orderNumber(L);
-				AppendTextToEdit("\r\n[system]°´¶©µ¥ÉıĞòÅÅÁĞÍê±Ï£¡");
+				AppendTextToEdit("\r\n[system]æŒ‰è®¢å•å‡åºæ’åˆ—å®Œæ¯•ï¼");
 			}
 		}
 		if (LOWORD(wParam) == ID_BUTTON8) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨ÅÅĞò£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•æ’åºï¼");
 			}
 			else
 			{
 				Uprank_price(L);
-				AppendTextToEdit("\r\n[system]°´¼Û¸ñÉıĞòÅÅÁĞÍê±Ï£¡");
+				AppendTextToEdit("\r\n[system]æŒ‰ä»·æ ¼å‡åºæ’åˆ—å®Œæ¯•ï¼");
 			}
 		}
 		if (LOWORD(wParam) == ID_BUTTON9) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨ÅÅĞò£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•æ’åºï¼");
 			}
 			else
 			{
 				Downrank_price(L);
-				AppendTextToEdit("\r\n[system]°´¼Û¸ñ½µĞòÅÅÁĞÍê±Ï£¡");
+				AppendTextToEdit("\r\n[system]æŒ‰ä»·æ ¼é™åºæ’åˆ—å®Œæ¯•ï¼");
 			}
 		}
 		if (LOWORD(wParam) == ID_BUTTON10) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨ÅÅĞò£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•æ’åºï¼");
 			}
 			else
 			{
 				Uprank_customerName(L);
-				AppendTextToEdit("\r\n[system]°´ĞÕÃûÉıĞòÅÅÁĞÍê±Ï£¡");
+				AppendTextToEdit("\r\n[system]æŒ‰å§“åå‡åºæ’åˆ—å®Œæ¯•ï¼");
 			}
 		}
 		if (LOWORD(wParam) == ID_BUTTON11) {
 			if (Have_Loaded == 0)
 			{
-				AppendTextToEdit("\r\n[system]Î´ÔØÈëÊı¾İ,ÎŞ·¨ÅÅĞò£¡");
+				AppendTextToEdit("\r\n[system]æœªè½½å…¥æ•°æ®,æ— æ³•æ’åºï¼");
 			}
 			else
 			{
 				Downrank_customerName(L);
-				AppendTextToEdit("\r\n[system]°´ĞÕÃû½µĞòÅÅÁĞÍê±Ï£¡");
+				AppendTextToEdit("\r\n[system]æŒ‰å§“åé™åºæ’åˆ—å®Œæ¯•ï¼");
 			}
 		}
 		if (LOWORD(wParam) == ID_BUTTON12) {
@@ -149,31 +149,31 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 		}
 		if (LOWORD(wParam) == ID_BUTTON16) {
 			DelData_Win(hwnd, L);
-			AppendTextToEdit("[system]Ä¿±êÊı¾İÒÑ¾­±»É¾³ı!");
+			AppendTextToEdit("[system]ç›®æ ‡æ•°æ®å·²ç»è¢«åˆ é™¤!");
 		}
 		if (LOWORD(wParam) == ID_BUTTON17) {
 			IncertData_Win(hwnd, L);
 		}
 
 		break;
-		//-----------------------ÏìÓ¦ÃüÁî--------------------
-	case WM_CLOSE: //¹Ø±Õ
-		if (IDYES == MessageBox(hwnd, "ÊÇ·ñÍË³ö³ö¹ÜÀíÏµÍ³?", "ÌáÊ¾", MB_YESNO | MB_ICONQUESTION))
+		//-----------------------å“åº”å‘½ä»¤--------------------
+	case WM_CLOSE: //å…³é—­
+		if (IDYES == MessageBox(hwnd, "æ˜¯å¦é€€å‡ºå‡ºç®¡ç†ç³»ç»Ÿ?", "æç¤º", MB_YESNO | MB_ICONQUESTION))
 		{
 			DestroyWindow(hwnd);
 		}
 		PostQuitMessage(0);
-		destroy(L);//Ïú»ÙÊı¾İ±í£¬ÊÍ·ÅÄÚ´æ
+		destroy(L);//é”€æ¯æ•°æ®è¡¨ï¼Œé‡Šæ”¾å†…å­˜
 		break;
-		//---------------------¹Ø±Õ´°¿ÚÖ¸Áî-----------------
+		//---------------------å…³é—­çª—å£æŒ‡ä»¤-----------------
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		destroy(L);
 		break;
-		//---------------------Ïú»Ù´°¿ÚÖ¸Áî-----------------
+		//---------------------é”€æ¯çª—å£æŒ‡ä»¤-----------------
 	default:
 		return DefWindowProc(hwnd, Message, wParam, lParam);
-		//---------------------ÎŞÃüÁî£¬¼ÌĞøÑ­»·-------------
+		//---------------------æ— å‘½ä»¤ï¼Œç»§ç»­å¾ªç¯-------------
 	}
 	return 0;
 }
@@ -183,83 +183,83 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 	Init(L);
 	memset(&wndclass, 0, sizeof(wndclass));
-	wndclass.cbSize = sizeof(WNDCLASSEX);//¶¨Òå´°¿ÚÀàĞÍ
-	wndclass.lpfnWndProc = WndProc;//¶¨Òå´Ë´°¿ÚµÄÏûÏ¢´¦Àíº¯Êı
-	wndclass.hInstance = hInstance;//³ÌĞòµÄÊµÀı¾ä±ú£¨WinMainº¯ÊıµÄµÚÒ»¸ö²ÎÊı£©
-	wndclass.hCursor = LoadCursor(NULL, IDC_CROSS);//ÉèÖÃÊó±ê¹â±êĞÎ×´
-	wndclass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);//ÉèÖÃ´°¿Ú±³¾°
-	wndclass.lpszClassName = "WindowClass"; //¶¨Òå´°¿ÚÀàµÄÃû³Æ
-	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);//ÉèÖÃ´°¿ÚµÄÍ¼±ê
-	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);//ÉèÖÃÊó±ê¹â±êĞÎ×´
+	wndclass.cbSize = sizeof(WNDCLASSEX);//å®šä¹‰çª—å£ç±»å‹
+	wndclass.lpfnWndProc = WndProc;//å®šä¹‰æ­¤çª—å£çš„æ¶ˆæ¯å¤„ç†å‡½æ•°
+	wndclass.hInstance = hInstance;//ç¨‹åºçš„å®ä¾‹å¥æŸ„ï¼ˆWinMainå‡½æ•°çš„ç¬¬ä¸€ä¸ªå‚æ•°ï¼‰
+	wndclass.hCursor = LoadCursor(NULL, IDC_CROSS);//è®¾ç½®é¼ æ ‡å…‰æ ‡å½¢çŠ¶
+	wndclass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);//è®¾ç½®çª—å£èƒŒæ™¯
+	wndclass.lpszClassName = "WindowClass"; //å®šä¹‰çª—å£ç±»çš„åç§°
+	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);//è®¾ç½®çª—å£çš„å›¾æ ‡
+	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);//è®¾ç½®é¼ æ ‡å…‰æ ‡å½¢çŠ¶
 	if (!RegisterClassEx(&wndclass)) {
 		MessageBox(NULL, "Window Registration Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
 		return 0;
 	}
 	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE,
-		"WindowClass",//´°¿ÚÀàµÄÃû³Æ
-		"¶©µ¥¹ÜÀíÏµÍ³",
-		WS_VISIBLE | WS_OVERLAPPEDWINDOW | WS_VSCROLL | WS_BORDER,//´°¿ÚµÄ·ç¸ñ
-		CW_USEDEFAULT,//´°¿ÚµÄ×ø±êX
-		CW_USEDEFAULT,//´°¿ÚµÄ×ø±êy
-		1000,//´°¿ÚµÄ¿í¶È
-		600,//´°¿ÚµÄ¸ß¶È
-		NULL, NULL, hInstance, NULL);//¸¸´°¿Ú¾ä±ú¡¢´°¿ÚµÄ²Ëµ¥¾ä±ú¡¢´°¿ÚµÄ¾ä±ú¡¢²ÎÊıÖ¸Õë
+		"WindowClass",//çª—å£ç±»çš„åç§°
+		"è®¢å•ç®¡ç†ç³»ç»Ÿ",
+		WS_VISIBLE | WS_OVERLAPPEDWINDOW | WS_VSCROLL | WS_BORDER,//çª—å£çš„é£æ ¼
+		CW_USEDEFAULT,//çª—å£çš„åæ ‡X
+		CW_USEDEFAULT,//çª—å£çš„åæ ‡y
+		1000,//çª—å£çš„å®½åº¦
+		600,//çª—å£çš„é«˜åº¦
+		NULL, NULL, hInstance, NULL);//çˆ¶çª—å£å¥æŸ„ã€çª—å£çš„èœå•å¥æŸ„ã€çª—å£çš„å¥æŸ„ã€å‚æ•°æŒ‡é’ˆ
 
-	//--------------------------ÒÔÉÏÊÇÉèÖÃ´°ÌåÊôĞÔ--------------------------------------
+	//--------------------------ä»¥ä¸Šæ˜¯è®¾ç½®çª—ä½“å±æ€§--------------------------------------
 	if (!hwnd)
 	{
-		MessageBox(NULL, "Ö÷´°¿Ú´´½¨Ê§°Ü£¡", "´íÎó", MB_ICONERROR);
+		MessageBox(NULL, "ä¸»çª—å£åˆ›å»ºå¤±è´¥ï¼", "é”™è¯¯", MB_ICONERROR);
 		return 1;
 	}
 	hChildWnd = CreateWindowEx(
-		0,                          // À©Õ¹·ç¸ñ
-		TEXT("EDIT"),               // ÀàÃû
-		"[System]¶©µ¥¹ÜÀíÏµÍ³³õÊ¼»¯³É¹¦!",                       // ±êÌâÀ¸ÎÄ±¾
-		WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | WS_EX_CLIENTEDGE,  // ÑùÊ½
-		80, 80, 400, 380,        // Î»ÖÃºÍ´óĞ¡
-		hwnd,                       // ¸¸´°¿Ú¾ä±ú
-		NULL,                       // ²Ëµ¥¾ä±ú
-		hInstance,                  // Ó¦ÓÃ³ÌĞòÊµÀı¾ä±ú
-		NULL                        // ´´½¨²ÎÊı
+		0,                          // æ‰©å±•é£æ ¼
+		TEXT("EDIT"),               // ç±»å
+		"[System]è®¢å•ç®¡ç†ç³»ç»Ÿåˆå§‹åŒ–æˆåŠŸ!",                       // æ ‡é¢˜æ æ–‡æœ¬
+		WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | WS_EX_CLIENTEDGE,  // æ ·å¼
+		80, 80, 400, 380,        // ä½ç½®å’Œå¤§å°
+		hwnd,                       // çˆ¶çª—å£å¥æŸ„
+		NULL,                       // èœå•å¥æŸ„
+		hInstance,                  // åº”ç”¨ç¨‹åºå®ä¾‹å¥æŸ„
+		NULL                        // åˆ›å»ºå‚æ•°
 	);
 
 	if (hwnd == NULL) {
 		MessageBox(NULL, "Window Creation Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
 		return 0;
 	}
-	CreateWindow("BUTTON", "µ¼³öÊı¾İ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "å¯¼å‡ºæ•°æ®", WS_VISIBLE | WS_CHILD,
 		500, 260, 120, 40, hwnd, (HMENU)ID_BUTTON1, hInstance, NULL);
-	CreateWindow("BUTTON", "Êı¾İÍ³¼Æ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "æ•°æ®ç»Ÿè®¡", WS_VISIBLE | WS_CHILD,
 		500, 320, 120, 40, hwnd, (HMENU)ID_BUTTON2, hInstance, NULL);
-	CreateWindow("BUTTON", "±éÀúÊı¾İ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "éå†æ•°æ®", WS_VISIBLE | WS_CHILD,
 		500, 200, 120, 40, hwnd, (HMENU)ID_BUTTON3, hInstance, NULL);
-	CreateWindow("BUTTON", "µ¥ºÅÉıĞò", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "å•å·å‡åº", WS_VISIBLE | WS_CHILD,
 		670, 80, 80, 30, hwnd, (HMENU)ID_BUTTON4, hInstance, NULL);
-	CreateWindow("BUTTON", "ÔØÈëÊı¾İ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "è½½å…¥æ•°æ®", WS_VISIBLE | WS_CHILD,
 		500, 140, 120, 40, hwnd, (HMENU)ID_BUTTON5, hInstance, NULL);
-	CreateWindow("BUTTON", "µ¥ºÅ½µĞò", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "å•å·é™åº", WS_VISIBLE | WS_CHILD,
 		780, 80, 80, 30, hwnd, (HMENU)ID_BUTTON6, hInstance, NULL);
-	CreateWindow("BUTTON", "¸²Ğ´Êı¾İ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "è¦†å†™æ•°æ®", WS_VISIBLE | WS_CHILD,
 		500, 80, 120, 40, hwnd, (HMENU)ID_BUTTON7, hInstance, NULL);
-	CreateWindow("BUTTON", "¼Û¸ñÉıĞò", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "ä»·æ ¼å‡åº", WS_VISIBLE | WS_CHILD,
 		670, 150, 80, 30, hwnd, (HMENU)ID_BUTTON8, hInstance, NULL);
-	CreateWindow("BUTTON", "¼Û¸ñ½µĞò", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "ä»·æ ¼é™åº", WS_VISIBLE | WS_CHILD,
 		780, 150, 80, 30, hwnd, (HMENU)ID_BUTTON9, hInstance, NULL);
-	CreateWindow("BUTTON", "ĞÕÃûÉıĞò", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "å§“åå‡åº", WS_VISIBLE | WS_CHILD,
 		670, 220, 80, 30, hwnd, (HMENU)ID_BUTTON10, hInstance, NULL);
-	CreateWindow("BUTTON", "ĞÕÃû½µĞò", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "å§“åé™åº", WS_VISIBLE | WS_CHILD,
 		780, 220, 80, 30, hwnd, (HMENU)ID_BUTTON11, hInstance, NULL);
-	CreateWindow("BUTTON", "²éÕÒ¶©µ¥", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "æŸ¥æ‰¾è®¢å•", WS_VISIBLE | WS_CHILD,
 		675, 340, 200, 40, hwnd, (HMENU)ID_BUTTON12, hInstance, NULL);
-	CreateWindow("BUTTON", "²éÕÒĞÕÃû", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "æŸ¥æ‰¾å§“å", WS_VISIBLE | WS_CHILD,
 		675, 400, 200, 40, hwnd, (HMENU)ID_BUTTON13, hInstance, NULL);
-	CreateWindow("BUTTON", "²éÕÒÉÌÆ·", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "æŸ¥æ‰¾å•†å“", WS_VISIBLE | WS_CHILD,
 		675, 460, 200, 40, hwnd, (HMENU)ID_BUTTON14, hInstance, NULL);
-	CreateWindow("BUTTON", ">>>>Çå¿ÕÎÄ±¾¿ò<<<<", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", ">>>>æ¸…ç©ºæ–‡æœ¬æ¡†<<<<", WS_VISIBLE | WS_CHILD,
 		655, 285, 240, 40, hwnd, (HMENU)ID_BUTTON15, hInstance, NULL);
-	CreateWindow("BUTTON", "É¾³ıÊı¾İ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "åˆ é™¤æ•°æ®", WS_VISIBLE | WS_CHILD,
 		500, 380, 120, 40, hwnd, (HMENU)ID_BUTTON16, hInstance, NULL);
-	CreateWindow("BUTTON", "²åÈëÊı¾İ", WS_VISIBLE | WS_CHILD,
+	CreateWindow("BUTTON", "æ’å…¥æ•°æ®", WS_VISIBLE | WS_CHILD,
 		500, 440, 120, 40, hwnd, (HMENU)ID_BUTTON17, hInstance, NULL);
 
 	while (GetMessage(&msg, NULL, 0, 0) > 0) {
@@ -270,61 +270,61 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 void DrawRect(HDC hdc, int left, int top, int right, int bottom)
 {
-	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));	// ´´½¨¾ØĞÎ»­±Ê
+	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));	// åˆ›å»ºçŸ©å½¢ç”»ç¬”
 
-	SelectObject(hdc, hPen);	                        // ´´½¨Í¸Ã÷»­Ë¢
+	SelectObject(hdc, hPen);	                        // åˆ›å»ºé€æ˜ç”»åˆ·
 
 	HBRUSH hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	SelectObject(hdc, hBrush);
-	Rectangle(hdc, left, top, right, bottom);           // »æÖÆ¾ØĞÎ
+	Rectangle(hdc, left, top, right, bottom);           // ç»˜åˆ¶çŸ©å½¢
 
-	DeleteObject(hPen);                                 // ÊÍ·Å»­±Ê×ÊÔ´
+	DeleteObject(hPen);                                 // é‡Šæ”¾ç”»ç¬”èµ„æº
 }
 
 void draw(HWND hwnd) {
 
-	//--------------------------------------------------------»æÍ¼-----------------------------------------------------------
-	HDC hdc;  // Éè±¸ÉÏÏÂÎÄ¾ä±ú
-	PAINTSTRUCT ps;  // »æÍ¼½á¹¹Ìå
-	RECT rect;  // ¾ØĞÎ½á¹¹Ìå
+	//--------------------------------------------------------ç»˜å›¾-----------------------------------------------------------
+	HDC hdc;  // è®¾å¤‡ä¸Šä¸‹æ–‡å¥æŸ„
+	PAINTSTRUCT ps;  // ç»˜å›¾ç»“æ„ä½“
+	RECT rect;  // çŸ©å½¢ç»“æ„ä½“
 
-	hdc = BeginPaint(hwnd, &ps);  // ¿ªÊ¼»æÍ¼£¬»ñÈ¡Éè±¸ÉÏÏÂÎÄ¾ä±úºÍ»æÍ¼½á¹¹Ìå
-	GetClientRect(hwnd, &rect);  // »ñÈ¡´°¿Ú¿Í»§ÇøµÄ¾ØĞÎ
+	hdc = BeginPaint(hwnd, &ps);  // å¼€å§‹ç»˜å›¾ï¼Œè·å–è®¾å¤‡ä¸Šä¸‹æ–‡å¥æŸ„å’Œç»˜å›¾ç»“æ„ä½“
+	GetClientRect(hwnd, &rect);  // è·å–çª—å£å®¢æˆ·åŒºçš„çŸ©å½¢
 
-	DrawRect(hdc, rect.left + 50, rect.top + 50, rect.right - 50, rect.bottom - 50);  // »æÖÆ¾ØĞÎ
+	DrawRect(hdc, rect.left + 50, rect.top + 50, rect.right - 50, rect.bottom - 50);  // ç»˜åˆ¶çŸ©å½¢
 
-	MoveToEx(hdc, 640, 50, NULL);  // ÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ
-	LineTo(hdc, 640, 505);  // »æÖÆÖ±Ïß
-	MoveToEx(hdc, 640, 280, NULL);  // ÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ
-	LineTo(hdc, 910, 280);  // »æÖÆÖ±Ïß
+	MoveToEx(hdc, 640, 50, NULL);  // ç§»åŠ¨åˆ°æŒ‡å®šä½ç½®
+	LineTo(hdc, 640, 505);  // ç»˜åˆ¶ç›´çº¿
+	MoveToEx(hdc, 640, 280, NULL);  // ç§»åŠ¨åˆ°æŒ‡å®šä½ç½®
+	LineTo(hdc, 910, 280);  // ç»˜åˆ¶ç›´çº¿
 
-	SetTextColor(hdc, RGB(255, 10, 10));  // ÉèÖÃÎÄ±¾ÑÕÉ«ÎªºìÉ«
-	SetBkMode(hdc, TRANSPARENT);  // ÉèÖÃ±³¾°Ä£Ê½ÎªÍ¸Ã÷
+	SetTextColor(hdc, RGB(255, 10, 10));  // è®¾ç½®æ–‡æœ¬é¢œè‰²ä¸ºçº¢è‰²
+	SetBkMode(hdc, TRANSPARENT);  // è®¾ç½®èƒŒæ™¯æ¨¡å¼ä¸ºé€æ˜
 
-	//----------------------------------------------------------ÎÄ±¾-----------------------------------------------------------
-	LOGFONT lf = { 0 };  // ×ÖÌå½á¹¹Ìå
-	lf.lfHeight = 20;  // ÉèÖÃ×ÖÌå¸ß¶ÈÎª20
-	lf.lfWeight = FW_NORMAL;  // ÉèÖÃ×ÖÌå´ÖÏ¸ÎªÆÕÍ¨
-	lstrcpy(lf.lfFaceName, TEXT("ËÎÌå"));  // ÉèÖÃ×ÖÌåÃû³ÆÎªËÎÌå
+	//----------------------------------------------------------æ–‡æœ¬-----------------------------------------------------------
+	LOGFONT lf = { 0 };  // å­—ä½“ç»“æ„ä½“
+	lf.lfHeight = 20;  // è®¾ç½®å­—ä½“é«˜åº¦ä¸º20
+	lf.lfWeight = FW_NORMAL;  // è®¾ç½®å­—ä½“ç²—ç»†ä¸ºæ™®é€š
+	lstrcpy(lf.lfFaceName, TEXT("å®‹ä½“"));  // è®¾ç½®å­—ä½“åç§°ä¸ºå®‹ä½“
 
-	HFONT hFont = CreateFontIndirect(&lf);  // ´´½¨×ÖÌå¶ÔÏó
-	HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);  // Ñ¡Ôñ×ÖÌå¶ÔÏóµ½Éè±¸ÉÏÏÂÎÄ
-	TextOut(hdc, 200, 55, "ĞÅÏ¢ÏÔÊ¾Ì¨", lstrlen("ĞÅÏ¢ÏÔÊ¾Ì¨"));  // »æÖÆÎÄ±¾
-	TextOut(hdc, 120, 470, "²éÕÒÓë²åÈëÊ±ÇëÔÚÎÄ±¾¿òÖĞÊäÈë¹Ø¼ü´Ê", lstrlen("²éÕÒÊ±ÇëÔÚÎÄ±¾¿òÖĞÊäÈë¹Ø¼ü´Ê"));  // »æÖÆÎÄ±¾
+	HFONT hFont = CreateFontIndirect(&lf);  // åˆ›å»ºå­—ä½“å¯¹è±¡
+	HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);  // é€‰æ‹©å­—ä½“å¯¹è±¡åˆ°è®¾å¤‡ä¸Šä¸‹æ–‡
+	TextOut(hdc, 200, 55, "ä¿¡æ¯æ˜¾ç¤ºå°", lstrlen("ä¿¡æ¯æ˜¾ç¤ºå°"));  // ç»˜åˆ¶æ–‡æœ¬
+	TextOut(hdc, 120, 470, "æŸ¥æ‰¾ä¸æ’å…¥æ—¶è¯·åœ¨æ–‡æœ¬æ¡†ä¸­è¾“å…¥å…³é”®è¯", lstrlen("æŸ¥æ‰¾æ—¶è¯·åœ¨æ–‡æœ¬æ¡†ä¸­è¾“å…¥å…³é”®è¯"));  // ç»˜åˆ¶æ–‡æœ¬
 
-	lf.lfHeight = 35;  // ÉèÖÃ×ÖÌå¸ß¶ÈÎª35
-	hFont = CreateFontIndirect(&lf);  // ´´½¨×ÖÌå¶ÔÏó
-	hOldFont = (HFONT)SelectObject(hdc, hFont);  // Ñ¡Ôñ×ÖÌå¶ÔÏóµ½Éè±¸ÉÏÏÂÎÄ
-	SetTextColor(hdc, RGB(0, 0, 255));  // ÉèÖÃ×ÖÌåÑÕÉ«ÎªÀ¶É«
-	TextOut(hdc, 300, 10, "¶©µ¥¹ÜÀíÏµÍ³", lstrlen("¶©µ¥¹ÜÀíÏµÍ³"));  // »æÖÆÎÄ±¾
+	lf.lfHeight = 35;  // è®¾ç½®å­—ä½“é«˜åº¦ä¸º35
+	hFont = CreateFontIndirect(&lf);  // åˆ›å»ºå­—ä½“å¯¹è±¡
+	hOldFont = (HFONT)SelectObject(hdc, hFont);  // é€‰æ‹©å­—ä½“å¯¹è±¡åˆ°è®¾å¤‡ä¸Šä¸‹æ–‡
+	SetTextColor(hdc, RGB(0, 0, 255));  // è®¾ç½®å­—ä½“é¢œè‰²ä¸ºè“è‰²
+	TextOut(hdc, 300, 10, "è®¢å•ç®¡ç†ç³»ç»Ÿ", lstrlen("è®¢å•ç®¡ç†ç³»ç»Ÿ"));  // ç»˜åˆ¶æ–‡æœ¬
 
-	lf.lfHeight = 20;  // ÉèÖÃ×ÖÌå¸ß¶ÈÎª20
-	hFont = CreateFontIndirect(&lf);  // ´´½¨×ÖÌå¶ÔÏó
-	hOldFont = (HFONT)SelectObject(hdc, hFont);  // Ñ¡Ôñ×ÖÌå¶ÔÏóµ½Éè±¸ÉÏÏÂÎÄ
-	TextOut(hdc, 515, 25, "(by:Ö£µÂ¿­&ÖÜÖ¾¸³)", lstrlen("(by:Ö£µÂ¿­&ÖÜÖ¾¸³)"));  // »æÖÆÎÄ±¾
+	lf.lfHeight = 20;  // è®¾ç½®å­—ä½“é«˜åº¦ä¸º20
+	hFont = CreateFontIndirect(&lf);  // åˆ›å»ºå­—ä½“å¯¹è±¡
+	hOldFont = (HFONT)SelectObject(hdc, hFont);  // é€‰æ‹©å­—ä½“å¯¹è±¡åˆ°è®¾å¤‡ä¸Šä¸‹æ–‡
+	TextOut(hdc, 515, 25, "(by:éƒ‘**&å‘¨**)", lstrlen("(by:éƒ‘**&å‘¨**)"));  // ç»˜åˆ¶æ–‡æœ¬
 
-	//----------------------------------------------------------½áÊø-----------------------------------------------------------
-	EndPaint(hwnd, &ps);  // ½áÊø»æÍ¼£¬ÊÍ·Å×ÊÔ´
+	//----------------------------------------------------------ç»“æŸ-----------------------------------------------------------
+	EndPaint(hwnd, &ps);  // ç»“æŸç»˜å›¾ï¼Œé‡Šæ”¾èµ„æº
 	return;
 }
 void Clear_tempNode()
@@ -333,13 +333,13 @@ void Clear_tempNode()
 	{
 		tempNode[i] = NULL;
 	}
-}//Çå¿Õ±»É¾³ı½ÚµãµÄ»º´æÊı×é
+}//æ¸…ç©ºè¢«åˆ é™¤èŠ‚ç‚¹çš„ç¼“å­˜æ•°ç»„
 void AppendTextToEdit(const char* text)
 {
-	int textLength = GetWindowTextLength(hChildWnd);//»ñÈ¡´°¿Úµ±Ç°ÎÄ±¾³¤¶È
-	SendMessage(hChildWnd, EM_SETSEL, textLength, textLength);//Ïò¹ö¶¯´°¿Ú·¢ËÍÖ¸Áî£¬½«²åÈëµãÉèÖÃÔÚÎÄ±¾Ä©
-	SendMessage(hChildWnd, EM_REPLACESEL, 0, (LPARAM)TEXT(text));//Ïò¹ö¶¯´°¿Ú·¢ËÍÖ¸Áî£¬½«²åÈëÎÄ±¾
-	SendMessage(hChildWnd, WM_VSCROLL, SB_BOTTOM, 0); //½«ÎÄ±¾×·¼Óµ½¹ö¶¯´°¿Ú
+	int textLength = GetWindowTextLength(hChildWnd);//è·å–çª—å£å½“å‰æ–‡æœ¬é•¿åº¦
+	SendMessage(hChildWnd, EM_SETSEL, textLength, textLength);//å‘æ»šåŠ¨çª—å£å‘é€æŒ‡ä»¤ï¼Œå°†æ’å…¥ç‚¹è®¾ç½®åœ¨æ–‡æœ¬æœ«
+	SendMessage(hChildWnd, EM_REPLACESEL, 0, (LPARAM)TEXT(text));//å‘æ»šåŠ¨çª—å£å‘é€æŒ‡ä»¤ï¼Œå°†æ’å…¥æ–‡æœ¬
+	SendMessage(hChildWnd, WM_VSCROLL, SB_BOTTOM, 0); //å°†æ–‡æœ¬è¿½åŠ åˆ°æ»šåŠ¨çª—å£
 }             
 
 void AppendTextToEdit_Clear(const char* text)
@@ -347,90 +347,90 @@ void AppendTextToEdit_Clear(const char* text)
 	int textLength = GetWindowTextLength(hChildWnd);
 	SendMessage(hChildWnd, EM_SETSEL, (WPARAM)-1, (LPARAM)-1);
 
-	// Ïò±à¼­¿ò·¢ËÍ EM_REPLACESEL ÏûÏ¢£¬½«ÎÄ±¾×·¼Óµ½ÏÖÓĞÎÄ±¾µÄÄ©Î²,
+	// å‘ç¼–è¾‘æ¡†å‘é€ EM_REPLACESEL æ¶ˆæ¯ï¼Œå°†æ–‡æœ¬è¿½åŠ åˆ°ç°æœ‰æ–‡æœ¬çš„æœ«å°¾,
 	SendMessage(hChildWnd, EM_REPLACESEL, FALSE, (LPARAM)text);
 	SendMessage(hChildWnd, WM_VSCROLL, SB_BOTTOM, 0);
-}//Çå¿Õ¹ö¶¯´°¿ÚµÄÎÄ±¾
+}//æ¸…ç©ºæ»šåŠ¨çª—å£çš„æ–‡æœ¬
 void LoadData_Win(HWND hwnd, List& L)
 {
 	if (Have_Loaded == 1)
 	{
-		AppendTextToEdit("\r\n[system]ÇëÎğÖØ¸´ÔØÈëÊı¾İ");
+		AppendTextToEdit("\r\n[system]è¯·å‹¿é‡å¤è½½å…¥æ•°æ®");
 		return;
 	}
-	int num_of_del =0;//×Ô¶¯É¾³ıÏàÍ¬Êı¾İµÄÊıÁ¿
-	long long key = LoadData(L,&num_of_del);//º¯Êı·µ»ØÊı¾İÌõÊıµ½key
+	int num_of_del =0;//è‡ªåŠ¨åˆ é™¤ç›¸åŒæ•°æ®çš„æ•°é‡
+	long long key = LoadData(L,&num_of_del);//å‡½æ•°è¿”å›æ•°æ®æ¡æ•°åˆ°key
 	if (key == -1)
-		AppendTextToEdit("\r\n[System]ÔØÈëÊı¾İÊ§°Ü,Çë¼ì²é¸ùÄ¿Â¼ÊÇ·ñÓĞÊı¾İÎÄ¼ş");
+		AppendTextToEdit("\r\n[System]è½½å…¥æ•°æ®å¤±è´¥,è¯·æ£€æŸ¥æ ¹ç›®å½•æ˜¯å¦æœ‰æ•°æ®æ–‡ä»¶");
 	else
 	{
 		char str1[50] = { 0 };
 		char str2[50] = { 0 };
-		sprintf(str2, "\r\n[System]ÒÑ¾­×Ô¶¯É¾³ı%dÌõÏàÍ¬Êı¾İ", num_of_del);
-		sprintf(str1, "\r\n[System]³É¹¦ÔØÈë%dÌõÓĞĞ§Êı¾İ!", key-num_of_del);
+		sprintf(str2, "\r\n[System]å·²ç»è‡ªåŠ¨åˆ é™¤%dæ¡ç›¸åŒæ•°æ®", num_of_del);
+		sprintf(str1, "\r\n[System]æˆåŠŸè½½å…¥%dæ¡æœ‰æ•ˆæ•°æ®!", key-num_of_del);
 		AppendTextToEdit(str2);
 		AppendTextToEdit(str1);
 
 	}
 	return;
-}//ÔØÈëÎÄ¼şÊı¾İµÄº¯Êı
+}//è½½å…¥æ–‡ä»¶æ•°æ®çš„å‡½æ•°
 void OutputData_Win(HWND hwnd, List& L)
 {
-	int key = OutputData(L);//º¯Êı·µ»ØÊı¾İÌõÊıµ½key
+	int key = OutputData(L);//å‡½æ•°è¿”å›æ•°æ®æ¡æ•°åˆ°key
 
 	if (key == -1)
-		AppendTextToEdit("\r\n[System]µ¼³öÊı¾İÊ§°Ü,ÇëÖØÊÔ");
+		AppendTextToEdit("\r\n[System]å¯¼å‡ºæ•°æ®å¤±è´¥,è¯·é‡è¯•");
 	else
 	{
 		char str[50] = { 0 };
-		sprintf(str, "\r\n[System]³É¹¦µ¼³ö%dÌõÊı¾İ,ÇëÔÚ¸ùÄ¿Â¼²éÕÒ", key);
+		sprintf(str, "\r\n[System]æˆåŠŸå¯¼å‡º%dæ¡æ•°æ®,è¯·åœ¨æ ¹ç›®å½•æŸ¥æ‰¾", key);
 		AppendTextToEdit(str);
 	}
 	return;
 }
 void OverwriteData_Win(HWND hwnd, List& L)
 {
-	int key = OverwriteData(L);//º¯Êı·µ»ØÊı¾İÌõÊıµ½key
+	int key = OverwriteData(L);//å‡½æ•°è¿”å›æ•°æ®æ¡æ•°åˆ°key
 
 	if (key == -1)
-		AppendTextToEdit("\r\n[System]¸²Ğ´Êı¾İÊ§°Ü,ÇëÖØÊÔ");
+		AppendTextToEdit("\r\n[System]è¦†å†™æ•°æ®å¤±è´¥,è¯·é‡è¯•");
 	else
 	{
 		char str[50] = { 0 };
-		sprintf(str, "\r\n[System]³É¹¦¸²Ğ´%dÌõÊı¾İ,data.txtÎÄ¼şÒÑ¸²Ğ´", key);
+		sprintf(str, "\r\n[System]æˆåŠŸè¦†å†™%dæ¡æ•°æ®,data.txtæ–‡ä»¶å·²è¦†å†™", key);
 		AppendTextToEdit(str);
 	}
 	return;
 }
 int Statistic_Win(HWND hwnd, List L)
 {
-	double sum = 0;//¶©µ¥¼Û¸ñ×ÜºÍ
-	long long count;//¶©µ¥Êı
+	double sum = 0;//è®¢å•ä»·æ ¼æ€»å’Œ
+	long long count;//è®¢å•æ•°
 	count = L.length;
 	LNode* p = new LNode;
 	int i;
-	for (i = 0, p = L.head->next; i < count && p; p = p->next, i++)//Ë«ÖØ
+	for (i = 0, p = L.head->next; i < count && p; p = p->next, i++)//åŒé‡
 	{
 		sum += p->data.price;
 	}
 	FILE* fp = fopen("Statistic.txt", "w");
-	fprintf(fp, "----------------Í³¼ÆĞÅÏ¢-----------------\n");
-	fprintf(fp, ">>>>>>>>¶©µ¥×ÜÊı: % d£¨´Î£©\n", count);
-	fprintf(fp, ">>>>>>>>½»Ò××Ü¶î:%.2lf£¨Ôª£©\n", sum);
-	AppendTextToEdit("\r\n-----------------------------------Êı¾İÍ³¼Æ½á¹û-------------------------------------");
+	fprintf(fp, "----------------ç»Ÿè®¡ä¿¡æ¯-----------------\n");
+	fprintf(fp, ">>>>>>>>è®¢å•æ€»æ•°: % dï¼ˆæ¬¡ï¼‰\n", count);
+	fprintf(fp, ">>>>>>>>äº¤æ˜“æ€»é¢:%.2lfï¼ˆå…ƒï¼‰\n", sum);
+	AppendTextToEdit("\r\n-----------------------------------æ•°æ®ç»Ÿè®¡ç»“æœ-------------------------------------");
 	char str1[50] = { 0 };
 	char str2[50] = { 0 };
-	sprintf(str1, "\r\n>>>>>>>>¶©µ¥×ÜÊı:%d£¨´Î£©", count);
-	sprintf(str2, "\r\n>>>>>>>>½»Ò××Ü¶î:%.2lf£¨Ôª£©", sum);
+	sprintf(str1, "\r\n>>>>>>>>è®¢å•æ€»æ•°:%dï¼ˆæ¬¡ï¼‰", count);
+	sprintf(str2, "\r\n>>>>>>>>äº¤æ˜“æ€»é¢:%.2lfï¼ˆå…ƒï¼‰", sum);
 	AppendTextToEdit(str1);
 	AppendTextToEdit(str2);
-	AppendTextToEdit("\r\n[System]¶©µ¥Í³¼ÆĞÅÏ¢ÒÑ¾­µ¼³öÎªStatistic.txt");
+	AppendTextToEdit("\r\n[System]è®¢å•ç»Ÿè®¡ä¿¡æ¯å·²ç»å¯¼å‡ºä¸ºStatistic.txt");
 	AppendTextToEdit("\r\n-----------------------------------------------------------------------------------------------");
 	fclose(fp);
 	fp = NULL;
-	printf("Í³¼ÆËùÓĞ¶©µ¥µÄĞÅÏ¢Íê³É£¡");
+	printf("ç»Ÿè®¡æ‰€æœ‰è®¢å•çš„ä¿¡æ¯å®Œæˆï¼");
 	return 1;
-}//Í³¼ÆËùÓĞ¶©µ¥µÄĞÅÏ¢£¬²¢ÒÔÎÄ¼şĞÎÊ½Êä³ö
+}//ç»Ÿè®¡æ‰€æœ‰è®¢å•çš„ä¿¡æ¯ï¼Œå¹¶ä»¥æ–‡ä»¶å½¢å¼è¾“å‡º
 void Traverse_Win(HWND hwnd, List &L)
 {
 	LNode* temp = L.head;
@@ -438,22 +438,22 @@ void Traverse_Win(HWND hwnd, List &L)
 	char str1[200] = { 0 };
 	char str2[200] = { 0 };
 	long long count = 0;
-	AppendTextToEdit("\r\n-----------------------------------Êı¾İ±éÀú½á¹û------------------------------------");
+	AppendTextToEdit("\r\n-----------------------------------æ•°æ®éå†ç»“æœ------------------------------------");
 	if (L.head->next == NULL)
 	{
-		AppendTextToEdit("\r\n[System]µ±Ç°ÎŞÊı¾İ£¬  ÇëÌáÇ°ÔØÈëÊı¾İ");
-		AppendTextToEdit("\r\n-----------------------------------Êı¾İ±éÀúÍê±Ï------------------------------------");
+		AppendTextToEdit("\r\n[System]å½“å‰æ— æ•°æ®ï¼Œ  è¯·æå‰è½½å…¥æ•°æ®");
+		AppendTextToEdit("\r\n-----------------------------------æ•°æ®éå†å®Œæ¯•------------------------------------");
 		return;
 	}
 	while (L.head->next != NULL)
 	{
 		L.head = L.head->next;
 		count++;
-		sprintf(str1, "\r\n%lld>>>>>>>¶©µ¥ºÅ:%lld  ĞÕÃû:%s  ÉÌÆ·Ãû:%s  ¶©µ¥¼Û¸ñ:%.2lf", count, L.head->data.orderNumber, L.head->data.customerName, L.head->data.productName, L.head->data.price);
+		sprintf(str1, "\r\n%lld>>>>>>>è®¢å•å·:%lld  å§“å:%s  å•†å“å:%s  è®¢å•ä»·æ ¼:%.2lf", count, L.head->data.orderNumber, L.head->data.customerName, L.head->data.productName, L.head->data.price);
 		AppendTextToEdit(str1);
 	}
 	L.head = temp;
-	sprintf(str2, "\r\n--------------------------¹²%dÌõÊı¾İÊı¾İ±éÀúÍê±Ï--------------------------", count);
+	sprintf(str2, "\r\n--------------------------å…±%dæ¡æ•°æ®æ•°æ®éå†å®Œæ¯•--------------------------", count);
 	AppendTextToEdit(str2);
 }
 void  Find_ordetNumber_Win(HWND hwnd, List L)
@@ -467,7 +467,7 @@ void  Find_ordetNumber_Win(HWND hwnd, List L)
 	char* buffer = (char*)malloc((textLength + 1) * sizeof(char));
 	GetWindowTextA(hChildWnd, buffer, textLength + 1);
 	long long number = atoi(buffer);
-	AppendTextToEdit("\r\n-----------------------------------Êı¾İ²éÕÒ½á¹û------------------------------------");
+	AppendTextToEdit("\r\n-----------------------------------æ•°æ®æŸ¥æ‰¾ç»“æœ------------------------------------");
 	LNode* p = new LNode;
 	int Hash_number = number % 10;
 	for (p = L.Hash_table_number[Hash_number]->Hash_table_next; p; p = p->Hash_table_next)
@@ -476,11 +476,11 @@ void  Find_ordetNumber_Win(HWND hwnd, List L)
 		{
 			tempNode[count] = p;
 			count++;
-			sprintf(str1, "\r\n%lld>>>>>>>¶©µ¥ºÅ:%lld  ĞÕÃû:%s  ÉÌÆ·Ãû:%s  ¶©µ¥¼Û¸ñ:%.2lf", count, p->data.orderNumber,p->data.customerName,p->data.productName,p->data.price);
+			sprintf(str1, "\r\n%lld>>>>>>>è®¢å•å·:%lld  å§“å:%s  å•†å“å:%s  è®¢å•ä»·æ ¼:%.2lf", count, p->data.orderNumber,p->data.customerName,p->data.productName,p->data.price);
 			AppendTextToEdit(str1);
 		}
 	}
-	sprintf(str2, "\r\n--------------------------¹²%dÌõÊı¾İÊı¾İ±»ÕÒµ½!-----------------------------", count);
+	sprintf(str2, "\r\n--------------------------å…±%dæ¡æ•°æ®æ•°æ®è¢«æ‰¾åˆ°!-----------------------------", count);
 	AppendTextToEdit(str2);
 	free(buffer);
 	length_tempNode = count;
@@ -495,7 +495,7 @@ void Find_customerName_Win(HWND hwnd, List L)
 	int textLength = GetWindowTextLength(hChildWnd);
 	char* buffer = (char*)malloc((textLength + 1) * sizeof(char));
 	GetWindowTextA(hChildWnd, buffer, textLength + 1);
-	AppendTextToEdit("\r\n-----------------------------------Êı¾İ²éÕÒ½á¹û------------------------------------");
+	AppendTextToEdit("\r\n-----------------------------------æ•°æ®æŸ¥æ‰¾ç»“æœ------------------------------------");
 	LNode* p = new LNode;
 	for (p = L.head->next; p; p = p->next)
 	{
@@ -503,11 +503,11 @@ void Find_customerName_Win(HWND hwnd, List L)
 		{
 			tempNode[count] = p;
 			count++;
-			sprintf(str1, "\r\n%lld>>>>>>>¶©µ¥ºÅ:%lld  ĞÕÃû:%s  ÉÌÆ·Ãû:%s  ¶©µ¥¼Û¸ñ:%.2lf", count, p->data.orderNumber, p->data.customerName, p->data.productName, p->data.price);
+			sprintf(str1, "\r\n%lld>>>>>>>è®¢å•å·:%lld  å§“å:%s  å•†å“å:%s  è®¢å•ä»·æ ¼:%.2lf", count, p->data.orderNumber, p->data.customerName, p->data.productName, p->data.price);
 			AppendTextToEdit(str1);
 		}
 	}
-	sprintf(str2, "\r\n--------------------------¹²%dÌõÊı¾İÊı¾İ±»ÕÒµ½!-----------------------------", count);
+	sprintf(str2, "\r\n--------------------------å…±%dæ¡æ•°æ®æ•°æ®è¢«æ‰¾åˆ°!-----------------------------", count);
 	AppendTextToEdit(str2);
 	free(buffer);
 	length_tempNode = count;
@@ -522,7 +522,7 @@ void Find_productName_Win(HWND hwnd, List L)
 	int textLength = GetWindowTextLength(hChildWnd);
 	char* buffer = (char*)malloc((textLength + 1) * sizeof(char));
 	GetWindowTextA(hChildWnd, buffer, textLength + 1);
-	AppendTextToEdit("\r\n-----------------------------------Êı¾İ²éÕÒ½á¹û------------------------------------");
+	AppendTextToEdit("\r\n-----------------------------------æ•°æ®æŸ¥æ‰¾ç»“æœ------------------------------------");
 	LNode* p = new LNode;
 	for (p = L.head->next; p; p = p->next)
 	{
@@ -530,11 +530,11 @@ void Find_productName_Win(HWND hwnd, List L)
 		{
 			tempNode[count] = p;
 			count++;
-			sprintf(str1, "\r\n%lld>>>>>>>¶©µ¥ºÅ:%lld  ĞÕÃû:%s  ÉÌÆ·Ãû:%s  ¶©µ¥¼Û¸ñ:%.2lf", count, p->data.orderNumber, p->data.customerName, p->data.productName, p->data.price);
+			sprintf(str1, "\r\n%lld>>>>>>>è®¢å•å·:%lld  å§“å:%s  å•†å“å:%s  è®¢å•ä»·æ ¼:%.2lf", count, p->data.orderNumber, p->data.customerName, p->data.productName, p->data.price);
 			AppendTextToEdit(str1);
 		}
 	}
-	sprintf(str2, "\r\n--------------------------¹²%dÌõÊı¾İÊı¾İ±»ÕÒµ½!-----------------------------", count);
+	sprintf(str2, "\r\n--------------------------å…±%dæ¡æ•°æ®æ•°æ®è¢«æ‰¾åˆ°!-----------------------------", count);
 	AppendTextToEdit(str2);
 	free(buffer);
 	length_tempNode = count;
@@ -596,13 +596,13 @@ void IncertData_Win(HWND hwnd, List &L)
 	free(p);
 	if (same == 1)
 	{
-		AppendTextToEdit("\r\n[system]ÒÑÓĞÏàÍ¬¶©µ¥ºÅ,ÎŞ·¨²åÈë");
+		AppendTextToEdit("\r\n[system]å·²æœ‰ç›¸åŒè®¢å•å·,æ— æ³•æ’å…¥");
 		return;
 	}
 	newdata.orderNumber = atoi(ordernumber);
 	newdata.price = atof(price);
 	insert(L, newdata);
-	AppendTextToEdit("\r\n[system]²åÈëÊı¾İ³É¹¦!");
+	AppendTextToEdit("\r\n[system]æ’å…¥æ•°æ®æˆåŠŸ!");
 }
 void DelData_Win(HWND hwnd, List &L)
 {
